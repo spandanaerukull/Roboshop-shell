@@ -76,3 +76,4 @@ VALIDATE $? "Installing MongoDB client"
 
 
 mongosh --host mongodb.spandanas.click </app/db/master-data.js
+VALIDATE $? "loading data into MongoDB"
