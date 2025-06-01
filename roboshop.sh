@@ -27,7 +27,7 @@ do
   --change-batch '
  {
 
-    "Comment": "Creating or updating record set for cognito endpoint"
+    "Comment": "Creating or updating record set for cognito endpoint" 
     ,"Changes": [{
       "Action"              : "UPSERT"
       ,"ResourceRecordSet"  : {
