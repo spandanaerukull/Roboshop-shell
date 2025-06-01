@@ -34,10 +34,10 @@ VALIDATE() {
 }
 
 dnf  module disable nodejs -y &>>$LOG_FILE
-VALIDATE $? "Disabling default NodeJS module"
+VALIDATE $? "Disabling default NodeJS"
 
 dnf module enable nodejs:20 -y &>>$LOG_FILE
-VALIDATE $? "Enabling NodeJS 20 module"
+VALIDATE $? "Enabling NodeJS 20"
 
 dnf install nodejs -y &>>$LOG_FILE
 VALIDATE $? "Installing NodeJS:20"
@@ -59,20 +59,16 @@ npm install &>>$LOG_FILE
 VALIDATE $? "Installing dependencies"
 
 cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service
-VALIDATE $? "Copying catalogue service file"
+VALIDATE $? "Copying catalogue service"
 
 systemctl daemon-reload &>>$LOG_FILE
-VALIDATE $? "Reloading systemd daemon"
-
-systemctl enable catalogue &>>$LOG_FILE
-VALIDATE $? "Enabling catalogue service"
-
-systemctl restart catalogue &>>$LOG_FILE
-VALIDATE $? "Restarting catalogue service"
+systemctl enable catalogue 
+systemctl start catalogue &>>$LOG_FILE
+VALIDATE $? "Starting catalogue" 
 
 cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
-dnf install mongodb-mongosh -y &>>$LOG_FILE
+dnf install mongodb-mongosh -y
 VALIDATE $? "Installing MongoDB client"
 
-mongosh --host mongodb.spandanas.click </app/db/master-data.js &>>$LOG_FILE
 
+mongosh --host mongodb.spandanas.click </app/db/master-data.js
