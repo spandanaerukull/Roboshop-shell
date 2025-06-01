@@ -23,13 +23,12 @@ fi
 
 #validate function takes inputs as exit statis, what command they tried to install
 VALIDATE() {
-    if [ $1-eq 0 ]
+    if [ $1 -eq 0 ]
     then
         echo -e " $2 is ...$G success $N" |tee -a $LOG_FILE
     else
         echo -e " $2 is ..$R failure $N" |tee -a $LOG_FILE
-    
-        exit 1
+    exit 1
     fi
 }
 
