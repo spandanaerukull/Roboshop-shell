@@ -11,7 +11,8 @@ DOMAIN_NAME="spandanas.click" # replace with your domain name
 for instance in ${INSTANCES[@]}
 do 
 
-       INSTANCE_ID=$(aws ec2 run-instances --image-id ami-09c813fb71547fc4f --instance-type t2.micro --security-group-ids sg-081d2f048f93f433e --tag-specifications
+       INSTANCE_ID=$(aws ec2 run-instances --image-id ami-09c813fb71547fc4f --instance-type t3.micro
+       --security-group-ids sg-081d2f048f93f433e --tag-specifications
         "ResourceType=instance,Tags=[{Key=Name,Value=$instance}]" --query "Instances[0].InstanceId" --output text)
                   if [ $instance != "frontend" ]
                   then
