@@ -71,7 +71,7 @@ systemctl restart catalogue &>>$LOG_FILE
 VALIDATE $? "Restarting catalogue service"
 
 cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
-dnf install mongodb-mongosh` -y &>>$LOG_FILE
+dnf install mongodb-mongosh -y &>>$LOG_FILE
 VALIDATE $? "Installing MongoDB client"
 
 mongosh --host mongodb.spandanas.click </app/db/master-data.js &>>$LOG_FILE
