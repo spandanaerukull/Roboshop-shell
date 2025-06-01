@@ -45,9 +45,10 @@ VALIDATE $? "Installing NodeJS:20"
 id roboshop &>>$LOG_FILE
 if [ $? -ne 0 ]; then
   useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
+  VALIDATE $? "Creating roboshop system user"
+else
+    echo -e "system user roboshop already created ...$Y skipping $N"
 fi
-VALIDATE $? "Creating roboshop system user"
-
 
 mkdir -p /app
 VALIDATE $? "Creating /app directory"
@@ -55,6 +56,7 @@ VALIDATE $? "Creating /app directory"
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>$LOG_FILE
 VALIDATE $? "Downloading catalogue.zip"
 
+rm -rf /app/* &>>$LOG_FILE
 cd /app
 unzip /tmp/catalogue.zip &>>$LOG_FILE
 VALIDATE $? "Unzipping catalogue.zip"
@@ -75,5 +77,14 @@ dnf install mongodb-mongosh -y
 VALIDATE $? "Installing MongoDB client"
 
 
-mongosh --host mongodb.spandanas.click </app/db/master-data.js
+STATUS=$(mongosh --host  catalogue.spandanas.click  --eval 'db.getmongo().getDBNames().indexof("catalogue")')
+if [ $STATUS -lt 0]
+then
+  mongosh --host mongodb.spandanas.click </app/db/master-data.js &>>$LOG_FILE
 VALIDATE $? "loading data into MongoDB"
+else
+    echo -e "Dta is already loaded...$Y SkIPPING $N"
+fi
+
+
+
