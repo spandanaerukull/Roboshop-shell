@@ -11,7 +11,7 @@ for instance in ${INSTANCES[@]}
 do 
   
 aws ec2 run-instances --image-id ami-09c813fb71547fc4f --instance-type t2.micro --security-group-ids sg-081d2f048f93f433e --tag-specifications "ResourceType=instance,
-Tags=[{Key=Name,Value=my-instance}]" --query "Instances[0].InstanceId" --output text 
+Tags=[{Key=Name,Value=$instance}]" --query "Instances[0].InstanceId" --output text 
                   if [ $instance != "frontend" ]
                   then
                     IP=(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query "Reservations[0].
