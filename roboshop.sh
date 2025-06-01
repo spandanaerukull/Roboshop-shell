@@ -11,18 +11,16 @@ DOMAIN_NAME="spandanas.click" # replace with your domain name
 for instance in ${INSTANCES[@]}
 do 
 
-       INSTANCE_ID=$(aws ec2 run-instances --image-id ami-09c813fb71547fc4f --instance-type t3.micro
-       --security-group-ids sg-081d2f048f93f433e --tag-specifications
-        "ResourceType=instance,Tags=[{Key=Name,Value=$instance}]" --query "Instances[0].InstanceId" --output text)
-                  if [ $instance != "frontend" ]
-                  then
+       INSTANCE_ID=$(aws ec2 run-instances --image-id ami-09c813fb71547fc4f --instance-type t3.micro -security-group-ids sg-081d2f048f93f433e --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$instance}]" --query "Instances[0].InstanceId" --output text)
+                if [ $instance != "frontend" ]
+                then
                     IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query "Reservations
                     [0].Instances[0].PrivateIpAddress" --output text)
                     
-                    else
+                else
                         IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query "Reservations
                         [0].Instances[0].PublicIpAddress" --output text)
-                    fi
+                fi
                     echo "$instance IP address: $IP"
     aws route53 change-resource-record-sets \
   --hosted-zone-id $ZONE_ID \
