@@ -78,7 +78,7 @@ dnf install mongodb-mongosh -y
 VALIDATE $? "Installing MongoDB client"
 
 STATUS=$(mongosh --host mongodb.spandanas.click --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
-if [$STATUS -ne 1 ];
+if [$STATUS -lt 0 ];
  then
   mongosh --host mongodb.spandanas.click </app/db/master-data.js &>>$LOG_FILE
 VALIDATE $? "loading data into Mongodb"
