@@ -43,7 +43,8 @@ dnf install nodejs -y &>>$LOG_FILE
 VALIDATE $? "Installing NodeJS:20"
 
 id roboshop &>>$LOG_FILE
-if [ $? -ne 0 ]; then
+if [ $? -ne 0 ]; 
+then
   useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
   VALIDATE $? "Creating roboshop system user"
 else
@@ -76,15 +77,8 @@ cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
 dnf install mongodb-mongosh -y
 VALIDATE $? "Installing MongoDB client"
 
-
-STATUS=$(mongosh --host  catalogue.spandanas.click  --eval 'db.getmongo().getDBNames().indexof("catalogue")')
-if [ $STATUS -lt 0]
-then
   mongosh --host mongodb.spandanas.click </app/db/master-data.js &>>$LOG_FILE
-VALIDATE $? "loading data into MongoDB"
-else
-    echo -e "Dta is already loaded...$Y SkIPPING $N"
-fi
+
 
 
 
