@@ -37,20 +37,20 @@ VALIDATE() {
     fi
 }
 
-dnf installmysql-server -y &>>$LOG_FILE
+dnf install mysql-server -y
 VALIDATE $? "Installing MySQL server"
 
-systemctl enable mysqld &>>$LOG_FILE
-VALIDATE $? "Enabling MySQL service"
+systemctl enable mysqld 
+VALIDATE $? "Enabling MySQL"
 
-systemctl start mysqld &>>$LOG_FILE
-VALIDATE $? "Starting MySQL service"
+systemctl start mysqld 
+VALIDATE $? "Starting MySQL"
 
-mysql_secure_installation --set-root-pass $MYSQL_ROOT_PASSWORD &>>$LOG_FILE
-VALIDATE $? "Securing MySQL installation"
+mysql_secure_installation --set-root-pass $MYSQL_ROOT_PASSWORD 
+VALIDATE $? "Setting mysql root password"
 
 
 END_TIME=$(date +%s)
 TOTAL_TIME=$((END_TIME - START_TIME))
 
-echo -e "Script  exection completed successfully, $Y time taken: $TOTAL_Time $N" | tee -a $LOG_FILESss
+echo -e "Script  exection completed successfully, $Y time taken: $TOTAL_Time $N" | tee -a $LOG_FILE
