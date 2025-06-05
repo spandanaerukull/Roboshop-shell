@@ -49,12 +49,12 @@ then
     fi
 
 mkdir -p /app
-VALIDATE $? "Creating /app directory"   
+VALIDATE $? "Creating app directory"
 
-curl -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shipping-v1.zip &>>$LOG_FILE
-VALIDATE $? "Downloading shipping.zip"
+curl -o /tmp/shipping.zip https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip &>>$LOG_FILE
+VALIDATE $? "Downloading shipping"
 
-rm -rf /app/* &>>$LOG_FILE
+rm -rf /app/* 
 cd /app
 unzip /tmp/shipping.zip &>>$LOG_FILE
 VALIDATE $? "Unzipping shipping"
@@ -63,7 +63,7 @@ mvn clean package &>>$LOG_FILE
 VALIDATE $? "packaging shipping application"
 
 mv target/shipping-1.0.jar shipping.jar &>>$LOG_FILE
-VALIDATE $? "Renaming shipping jar file"
+VALIDATE $? "moving and renaming jar files"
 
 cp $SCRIPT_DIR/shipping.service /etc/systemd/system/shipping.service
 
