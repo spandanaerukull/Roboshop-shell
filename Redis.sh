@@ -49,8 +49,8 @@ VALIDATE $? "Edited Redis.conf to accept remote connections"
 systemctl enable redis &>>$LOG_FILE
 VALIDATE $? "Enabling Redis service"
 
-systemctl start redis &>>$LOG_FILE
-VALIDATE $? "Starting Redis service"
+systemctl restart redis &>>$LOG_FILE
+VALIDATE $? "Restarting Redis service"
 
 END_TIME=$(date +%s)
 TOTAL_TIME=$(( $END_TIME - $START_TIME ))
