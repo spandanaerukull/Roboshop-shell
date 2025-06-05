@@ -68,13 +68,13 @@ VALIDATE $? "moving and renaming jar files"
 cp $SCRIPT_DIR/shipping.service /etc/systemd/system/shipping.service
 
 systemctl daemon-reload &>>$LOG_FILE
-VALIDATE $? "Reloading systemd daemon"
+VALIDATE $? "daemon Realoding"
 
 systemctl enable shipping &>>$LOG_FILE
-validate $? "Enabling shipping service"
+validate $? "Enabling shipping"
 
 systemctl start shipping &>>$LOG_FILE
-VALIDATE $? "Starting shipping service"
+VALIDATE $? "Starting shipping"
 
 dnf install mysql -y &>>$LOG_FILE
 VALIDATE $? "Installing MySQL"
