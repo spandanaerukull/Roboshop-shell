@@ -1,5 +1,4 @@
 #!/bin/bash
-set -x
 
 START_TIME=$(date +%s)
 USERID=$(id -u)
