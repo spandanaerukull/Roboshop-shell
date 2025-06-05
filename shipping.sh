@@ -72,7 +72,7 @@ systemctl daemon-reload &>>$LOG_FILE
 VALIDATE $? "daemon Realoding"
 
 systemctl enable shipping &>>$LOG_FILE
-VALIDATE $? "Enabling shipping service"
+VALIDATE $? "Enabling shipping"
 
 systemctl start shipping &>>$LOG_FILE
 VALIDATE $? "Starting shipping"
@@ -95,7 +95,7 @@ else
 fi
 
 systemctl Restart shipping &>>$LOG_FILE
-Validate $? "Restarting shipping service"   
+Validate $? "Restarting shipping"
 
 
 END_TIME=$(date +%s)
