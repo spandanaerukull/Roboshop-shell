@@ -1,5 +1,5 @@
 #!/bin/bash
-set -x
+
 START_TIME=$(date +%s)
 USERID=$(id -u)
 R=\e[31m"
@@ -51,12 +51,12 @@ mkdir -p /app
 VALIDATE $? "Creating /app directory"
 
 curl -o /tmp/payment.zip https://roboshop-artifacts.s3.amazonaws.com/payment-v3.zip &>>$LOG_FILE
-VALIDATE $? "Downloading payment.zip"
+VALIDATE $? "Downloading payment"
 
 rm -rf /app/* &>>$LOG_FILE
 cd /app
 unzip /tmp/payment.zip &>>$LOG_FILE
-VALIDATE $? "Unzipping payment.zip"
+VALIDATE $? "Unzipping payment"
 
 pip3 install -r requirements.txt &>>$LOG_FILE
 VALIDATE $? "Installing Python dependencies"
