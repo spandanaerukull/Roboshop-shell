@@ -41,7 +41,7 @@ dnf install maven -y &>>$LOG_FILE
 VALIDATE $? "Installing Maven and java"
 
 id roboshop &>>$LOG_FILE
-if [ $? -ne 0 ];
+if [ $? -ne 0 ]
 then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
     VALIDATE $? "Creating roboshop system user"
@@ -87,8 +87,8 @@ mysql -h mysql.spandanas.click --uroot -p$MYSQL_ROOT_PASSWORD < /app/db/master-d
 VALIDATE $? "loading data into MySQL"
 
 
-systemctl Restart shipping &>>$LOG_FILE
-Validate $? "Restarting shipping"
+systemctl restart shipping &>>$LOG_FILE
+VALIDATE $? "Restarting shipping service"
 
 
 END_TIME=$(date +%s)
