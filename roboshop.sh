@@ -29,7 +29,7 @@ do
 
     "Comment": "Creating or updating record set for cognito endpoint" 
     ,"Changes": [{
-      "Action"              : "UPSERT"
+      "Action"              : "UPSERT"                                          
       ,"ResourceRecordSet"  : {
         "Name"              : "'$instance'.'$DOMAIN_NAME'"
         ,"Type"             : "A"
