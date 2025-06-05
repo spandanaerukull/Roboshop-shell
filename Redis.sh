@@ -30,7 +30,7 @@ VALIDATE() {
         echo -e " $2 is ...$G success $N" |tee -a $LOG_FILE
     else
         echo -e " $2 is ..$R failure $N" |tee -a $LOG_FILE
-    exit 1
+        exit 1
     fi
 }
 
@@ -43,17 +43,4 @@ VALIDATE $? "Enabling Redis 7"
 dnf install redis -y &>>$LOG_FILE
 VALIDATE $? "Installing Redis"
 
-sed -i -e 's/127.0.0.1/0.0.0.0/g' -e '/protected-mode/ c protected-mode no' /etc/redis.conf &>>$LOG_FILE                                                                                 
-VALIDATE $? "Edited Redis.conf to accept remote connections"
-
-systemctl enable redis &>>$LOG_FILE
-VALIDATE $? "Enabling Redis service"
-
-systemctl start redis &>>$LOG_FILE
-VALIDATE $? "Starting Redis service"
-
-END_TIME=$(date +%s)
-TOTAL_TIME=$((END_TIME - START_TIME))
-
-echo -e "Script  exection completed successfully, $Y time taken: $TOTAL_Time $N" | tee -a $LOG_FILES
 
