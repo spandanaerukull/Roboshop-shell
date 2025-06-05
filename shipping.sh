@@ -80,7 +80,7 @@ VALIDATE $? "Starting shipping"
 dnf install mysql -y &>>$LOG_FILE
 VALIDATE $? "Installing MySQL"
 
-mysql -h mysql.spandanas.click --u   root -p$MYSQL_ROOT_PASSWORD -e 'use cities'$LOG_FILE
+mysql -h mysql.spandanas.click --uroot -p$MYSQL_ROOT_PASSWORD -e 'use cities'$LOG_FILE
 
 if [ $? -ne 0 ]
 then
