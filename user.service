@@ -1,0 +1,14 @@
+[Unit]
+Description = User Service
+[Service]
+User=roboshop
+Environment=MONGO=true
+// highlight-start
+Environment=REDIS_URL='redis://redies.spandanas.click:6379'
+Environment=MONGO_URL="mongodb://mongodb.spandanas.click:27017/user"
+// highlight-end
+ExecStart=/bin/node /app/server.js
+SyslogIdentifier=user
+
+[Install]
+WantedBy=multi-user.target

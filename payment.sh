@@ -1,5 +1,5 @@
 #!/bin/bash
-
+START_TIME=$(date +%s)
 USERID=$(id -u)
 R=\e[31m"
 G=\e[32m"
@@ -33,14 +33,9 @@ VALIDATE() {
     fi
 }
 
-dnf  module disable nodejs -y &>>$LOG_FILE
-VALIDATE $? "Disabling default NodeJS"
+dnf install python3 gcc python3-devel -y &>>$LOG_FILE
+VALIDATE $? "Installing Python3 packages"
 
-dnf module enable nodejs:20 -y &>>$LOG_FILE
-VALIDATE $? "Enabling NodeJS 20"
-
-dnf install nodejs -y &>>$LOG_FILE
-VALIDATE $? "Installing NodeJS:20"
 
 id roboshop &>>$LOG_FILE
 if [ $? -ne 0 ]; 
@@ -54,39 +49,32 @@ fi
 mkdir -p /app
 VALIDATE $? "Creating /app directory"
 
-curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip &>>$LOG_FILE
-VALIDATE $? "Downloading catalogue.zip"
+curl -o /tmp/payment.zip https://roboshop-artifacts.s3.amazonaws.com/payment-v3.zip &>>$LOG_FILE
+VALIDATE $? "Downloading payment.zip"
 
 rm -rf /app/* &>>$LOG_FILE
 cd /app
-unzip /tmp/catalogue.zip &>>$LOG_FILE
-VALIDATE $? "Unzipping catalogue.zip"
+unzip /tmp/payment.zip &>>$LOG_FILE
+VALIDATE $? "Unzipping payment.zip"
 
-npm install &>>$LOG_FILE
-VALIDATE $? "Installing dependencies"
+pip3 install -r requirements.txt &>>$LOG_FILE
+VALIDATE $? "Installing Python dependencies"
 
-cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service
-VALIDATE $? "Copying catalogue service"
+cp $SCRIPT_DIR/payment.service /etc/systemd/system/payment.service &>>$LOG_FILE
+VALIDATE $? "Copying payment.service file"
 
-systemctl daemon-reload &>>$LOG_FILE
-systemctl enable catalogue 
-systemctl start catalogue &>>$LOG_FILE
-VALIDATE $? "Starting catalogue" 
+syetmctl daemon-reload &>>$LOG_FILE
+VALIDATE $? "Reloading systemd daemon"
 
-cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
-dnf install mongodb-mongosh -y
-VALIDATE $? "Installing MongoDB client"
+systemctl enable payment &>>$LOG_FILE
+VALIDATE $? "Enabling payment service"
 
-STATUS=$(mongosh --host mongodb.spandanas.click --eval 'db.getMongo().getDBNames().indexOf("catalogue")')
-if [ $STATUS -lt 0 ];
- then
-  mongosh --host mongodb.spandanas.click </app/db/master-data.js &>>$LOG_FILE
-VALIDATE $? "loading data into Mongodb"
-else
-  echo -e "$Y Data already loaded ...$ SKIPPING $N"
-fi
+systemctl start payment &>>$LOG_FILE
+VALIDATE $? "Starting payment service"
 
+END_TIME=$(date +%s)
+TOTAL_TIME=$((END_TIME - START_TIME))
 
-
+echo -e "Script  exection completed successfully, $Y time taken: $TOTAL_TIME seconds $N" |tee -a $LOG_FILE
 
 
