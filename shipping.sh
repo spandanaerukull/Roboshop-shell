@@ -83,12 +83,10 @@ dnf install mysql -y &>>$LOG_FILE
 VALIDATE $? "Install MySQL"
 
 
-mysql -h mysql.spandanas.click --uroot -p$MYSQL_ROOT_PASSWORD < /app/db/schema.sql &>>$LOG_FILE
-VALIDATE $? "Loading schema.sql into MySQL"
-mysql -h mysql.spandanas.click --uroot -p$MYSQL_ROOT_PASSWORD < /app/db/app-user.sql &>>$LOG_FILE
-VALIDATE $? "Loading app-user.sql into MySQL"
-mysql -h mysql.spandanas.click --uroot -p$MYSQL_ROOT_PASSWORD < /app/db/master-data.sql &>>$LOG_FILE
-VALIDATE $? "Loading master-data.sql into MySQL"
+mysql -h mysql.spandanas.click -u root -p$MYSQL_ROOT_PASSWORD < /app/db/schema.sql &>>$LOG_FILE
+mysql -h mysql.spandanas.click -u root -p$MYSQL_ROOT_PASSWORD < /app/db/app-user.sql &>>$LOG_FILE
+mysql -h mysql.spandanas.click -u root -p$MYSQL_ROOT_PASSWORD < /app/db/master-data.sql &>>$LOG_FILE
+VALIDATE $? "Loading MySQL data"
 
 systemctl restart shipping &>>$LOG_FILE
 VALIDATE $? "Restarting shipping service"
