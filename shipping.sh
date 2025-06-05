@@ -32,7 +32,7 @@ VALIDATE() {
         echo -e " $2 is ...$G success $N" |tee -a $LOG_FILE
     else
         echo -e " $2 is ..$R failure $N" |tee -a $LOG_FILE
-    exit 1
+        exit 1
     fi
 }
 
