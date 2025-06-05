@@ -1,5 +1,5 @@
 #!/bin/bash
-set -x
+
 START_TIME=$(date +%s)
 USERID=$(id -u)
 R=\e[31m"
@@ -64,7 +64,7 @@ VALIDATE $? "Installing Python dependencies"
 cp $SCRIPT_DIR/payment.service /etc/systemd/system/payment.service &>>$LOG_FILE
 VALIDATE $? "Copying payment.service file"
 
-syetmctl daemon-reload &>>$LOG_FILE
+systemctl daemon-reload &>>$LOG_FILE
 VALIDATE $? "Daemon Reload"
 
 systemctl enable payment &>>$LOG_FILE
