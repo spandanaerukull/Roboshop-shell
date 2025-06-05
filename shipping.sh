@@ -72,7 +72,7 @@ systemctl daemon-reload &>>$LOG_FILE
 VALIDATE $? "daemon Realoding"
 
 systemctl enable shipping &>>$LOG_FILE
-VALIDATE $? "Enabling shipping"
+VALIDATE $? "enabling shipping"
 
 systemctl start shipping &>>$LOG_FILE
 VALIDATE $? "Starting shipping"
