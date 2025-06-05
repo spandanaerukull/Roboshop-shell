@@ -81,10 +81,18 @@ VALIDATE $? "Starting shipping"
 dnf install mysql -y &>>$LOG_FILE
 VALIDATE $? "Install MySQL"
 
-
+mysql -h mysql.spandanas.click -u root -pRoboShop@1 -e 'use cities'
+if [ $? -ne 0 ]
+then
 mysql -h mysql.spandanas.click -u root -p$MYSQL_ROOT_PASSWORD < /app/db/schema.sql &>>$LOG_FILE
 mysql -h mysql.spandanas.click -u root -p$MYSQL_ROOT_PASSWORD < /app/db/app-user.sql &>>$LOG_FILE
 mysql -h mysql.spandanas.click -u root -p$MYSQL_ROOT_PASSWORD < /app/db/master-data.sql &>>$LOG_FILE
+else
+    echo -e "Data is already loaded in MySQL database ...$Y skipping $N"
+    
+fi
+
+
 VALIDATE $? "Loading MySQL data"
 
 systemctl restart shipping &>>$LOG_FILE
