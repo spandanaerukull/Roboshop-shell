@@ -72,19 +72,19 @@ systemctl daemon-reload &>>$LOG_FILE
 VALIDATE $? "daemon Realoding"
 
 systemctl enable shipping &>>$LOG_FILE
-VALIDATE $? "enabling shipping"
+VALIDATE $? "Enabling shipping"
 
 systemctl start shipping &>>$LOG_FILE
 VALIDATE $? "Starting shipping"
 
 dnf install mysql -y &>>$LOG_FILE
-VALIDATE $? "Installing MySQL"
+VALIDATE $? "Install MySQL"
 
 
 mysql -h mysql.spandanas.click --uroot -p$MYSQL_ROOT_PASSWORD < /app/db/schema.sql &>>$LOG_FILE
-mysql -h mysql.spandanas.click --uroot  -p$MYSQL_ROOT_PASSWORD < /app/db/app-user.sql &>>$LOG_FILE
+mysql -h mysql.spandanas.click --uroot -p$MYSQL_ROOT_PASSWORD < /app/db/app-user.sql &>>$LOG_FILE
 mysql -h mysql.spandanas.click --uroot -p$MYSQL_ROOT_PASSWORD < /app/db/master-data.sql &>>$LOG_FILE
-VALIDATE $? "loading data into MySQL"
+VALIDATE $? "Loading data into MySQL"
 
 
 systemctl restart shipping &>>$LOG_FILE
