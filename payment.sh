@@ -65,7 +65,7 @@ cp $SCRIPT_DIR/payment.service /etc/systemd/system/payment.service &>>$LOG_FILE
 VALIDATE $? "Copying payment.service file"
 
 syetmctl daemon-reload &>>$LOG_FILE
-VALIDATE $? "Reloading systemd daemon"
+VALIDATE $? "Daemon Reload"
 
 systemctl enable payment &>>$LOG_FILE
 VALIDATE $? "Enabling payment service"
