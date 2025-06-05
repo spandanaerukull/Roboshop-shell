@@ -2,10 +2,11 @@
 
 START_TIME=$(date +%s)
 USERID=$(id -u)
-R=\e[31m"
-G=\e[32m"
-Y=\e[33m"
-N=\e[0m"
+R="\e[31m"
+B="\e[34m"
+G="\e[32m"
+Y="\e[33m"
+N="\e[0m"
 LOGS_FOLDER="/var/log/roboshop"
 SCRIPT_NAME=$(echo $0 | cut -d "," -f1)
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
@@ -32,7 +33,7 @@ VALIDATE() {
         echo -e " $2 is ...$G success $N" |tee -a $LOG_FILE
     else
         echo -e " $2 is ..$R failure $N" |tee -a $LOG_FILE
-    exit 1
+        exit 1
     fi
 }
 
